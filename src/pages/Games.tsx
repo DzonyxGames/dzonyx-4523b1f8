@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Gamepad2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const SteamIcon = () => (
   <svg viewBox="0 0 24 24" className="w-6 h-6" fill="currentColor">
@@ -73,6 +74,15 @@ const Games = () => {
                     )}
                   </div>
                 </div>
+                {(game as any).download_url && (
+                  <div className="mt-4">
+                    <Button asChild variant="outline" size="sm" className="horror-border">
+                      <a href={(game as any).download_url} target="_blank" rel="noopener noreferrer" download>
+                        Download
+                      </a>
+                    </Button>
+                  </div>
+                )}
               </div>
             </div>
           ))}
