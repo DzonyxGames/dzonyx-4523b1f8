@@ -17,11 +17,28 @@ const Suggestions = () => {
   const { data: suggestions, isLoading } = useQuery({
     queryKey: ['suggestions'],
     queryFn: async () => {
-      const { data } = await supabase
+      const { data: rawSuggestions, error: suggestionsError } = await supabase
         .from('suggestions')
-        .select('*, profiles(username, muted)')
+        .select('*')
         .order('created_at', { ascending: false });
-      return data || [];
+
+      if (suggestionsError) throw suggestionsError;
+
+      const userIds = [...new Set((rawSuggestions || []).map((s) => s.user_id))];
+      if (userIds.length === 0) return [];
+
+      const { data: profiles, error: profilesError } = await supabase
+        .from('profiles')
+        .select('id, username, muted')
+        .in('id', userIds);
+
+      if (profilesError) throw profilesError;
+
+      const profilesById = new Map((profiles || []).map((p) => [p.id, p]));
+      return (rawSuggestions || []).map((s) => ({
+        ...s,
+        profiles: profilesById.get(s.user_id) || null,
+      }));
     },
   });
 
