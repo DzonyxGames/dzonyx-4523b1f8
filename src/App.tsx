@@ -12,6 +12,7 @@ import Games from "./pages/Games";
 import News from "./pages/News";
 import Donations from "./pages/Donations";
 import Socials from "./pages/Socials";
+import Contact from "./pages/Contact";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 
@@ -33,6 +34,7 @@ const App = () => (
             <Route path="/news" element={<News />} />
             <Route path="/donations" element={<Donations />} />
             <Route path="/socials" element={<Socials />} />
+            <Route path="/contact" element={<Contact />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

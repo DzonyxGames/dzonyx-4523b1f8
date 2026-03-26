@@ -15,6 +15,7 @@ const Navbar = () => {
     { to: '/news', label: 'News' },
     { to: '/donations', label: 'Donate' },
     { to: '/socials', label: 'Socials' },
+    { to: '/contact', label: 'Contact' },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -27,7 +28,6 @@ const Navbar = () => {
             DZONYX
           </Link>
 
-          {/* Desktop */}
           <div className="hidden md:flex items-center gap-1">
             {links.map(l => (
               <Link
@@ -58,14 +58,12 @@ const Navbar = () => {
             )}
           </div>
 
-          {/* Mobile toggle */}
           <button className="md:hidden text-foreground" onClick={() => setMobileOpen(!mobileOpen)}>
             {mobileOpen ? <X /> : <Menu />}
           </button>
         </div>
       </div>
 
-      {/* Mobile menu */}
       {mobileOpen && (
         <div className="md:hidden bg-background border-b border-border pb-4 px-4 space-y-1">
           {links.map(l => (
