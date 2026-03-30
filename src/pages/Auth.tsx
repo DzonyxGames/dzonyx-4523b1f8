@@ -10,7 +10,6 @@ const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [username, setUsername] = useState('');
   const [loading, setLoading] = useState(false);
   const { signIn, signUp } = useAuth();
   const navigate = useNavigate();
@@ -28,16 +27,12 @@ const Auth = () => {
         navigate('/');
       }
     } else {
-      if (!username.trim()) {
-        toast.error('Username is required');
-        setLoading(false);
-        return;
-      }
-      const { error } = await signUp(email, password, username);
+      const { error } = await signUp(email, password);
       if (error) {
         toast.error(error.message);
       } else {
-        toast.success('Account created! Please check your email to confirm, then log in.');
+        toast.success('Account created! You can now log in.');
+        setIsLogin(true);
       }
     }
 
@@ -54,16 +49,6 @@ const Auth = () => {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
-            {!isLogin && (
-              <Input
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="bg-muted border-border"
-                required
-              />
-            )}
-
             <Input
               type="email"
               placeholder="Email"
